@@ -4,15 +4,15 @@ Hello and welcome to my portfolio! Below are some projects that I've done upon c
 
 I also work with the following tools:
 
-* R
-* SQL
-* Tableau
-* Excel
+* *R*
+* *SQL*
+* *Tableau*
+* *Excel*
 
 ## Projects
 * R Projects
 * SQL Projects
-* Google Data Analytics Capstone Project
+* [Google Data Analytics Capstone Project](/BellaBeat-Case-Study)
 
 ## Interests
 * Health and Wellness
