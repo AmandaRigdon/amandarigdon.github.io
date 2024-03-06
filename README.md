@@ -1,4 +1,4 @@
-# About
+## About
 
 Hello and welcome to my portfolio! 
 
