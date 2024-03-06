@@ -12,7 +12,7 @@ I also work with the following tools:
 ## Projects
 * R Projects
 * SQL Projects
-* [Google Data Analytics Capstone Project](/BellaBeat-Case-Study)
+* [Google Data Analytics Capstone Project](https://github.com/AmandaRigdon/BellaBeat-Case-Study)
 
 ## Interests
 * Health and Wellness
