@@ -1,1 +1,8 @@
-# amandarigdon.github.io
+# About Me
+
+## Education
+
+## Projects
+
+## Interests
+
