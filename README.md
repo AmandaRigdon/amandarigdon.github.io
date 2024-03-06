@@ -2,7 +2,7 @@
 
 Hello and welcome to my portfolio! Below are some projects that I've done upon completion of my Google Data Analytics certificate. 
 
-* *Tools:* SQL, R, Excel, Tableau
+* *Tools: SQL, R, Excel, Tableau*
 
 ## Projects
 * R Projects
