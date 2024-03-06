@@ -1,6 +1,8 @@
 # About
 
-Hello and welcome to my portfolio! Below are some projects that I've done upon completion of my Google Data Analytics certificate. 
+Hello and welcome to my portfolio! 
+
+With my current job as a wine information analyst, I already have some experience in data analysis, specifically regarding data cleaning, data integrity, and communication. I'm hoping to use these skills along with the new skills I have learned from the Google Data Analytics course to expand my horizons.
 
 I also work with the following tools:
 
@@ -8,6 +10,8 @@ I also work with the following tools:
 * *SQL*
 * *Tableau*
 * *Excel*
+
+Please feel free to have a look at the projects I've completed below:
 
 ## Projects
 * R Projects
