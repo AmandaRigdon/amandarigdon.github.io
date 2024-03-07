@@ -17,7 +17,9 @@ Please feel free to have a look at the projects I've completed below:
 * R Projects
 * SQL Projects
 * [Google Data Analytics Capstone Project](https://github.com/AmandaRigdon/BellaBeat-Case-Study)
-* Excel Projects
+
+## Excel Projects
+* [Call Center Dashboard](https://docs.google.com/spreadsheets/d/1fimmXMH48NbNgPzmbXNCLj_4ZS8VJF_I/edit?usp=drive_link&ouid=108900393145265077055&rtpof=true&sd=true)
 
 ## Interests
 * Health and Wellness
