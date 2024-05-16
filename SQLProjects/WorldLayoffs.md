@@ -164,4 +164,77 @@ SET country = TRIM(TRAILING '.' FROM country)
 WHERE country LIKE 'United States%';
 ```
 
+The date column in this dataset has the wrong format as well as the wrong data type which is fixed with the below statements:
 
+```sql
+SELECT `date`,
+str_to_date(`date`, '%m/%d/%Y')
+FROM layoffs_staging2;
+```
+
+```sql
+UPDATE layoffs_staging2
+SET `date` = 
+    CASE
+        WHEN `date` IS NOT NULL AND `date` != 'NULL' THEN STR_TO_DATE(`date`, '%m/%d/%Y')
+        ELSE NULL  
+    END;
+```
+
+```sql
+ALTER TABLE layoffs_staging2
+MODIFY COLUMN `date` DATE;
+```
+
+With all this completed, the next step will be removing null values. In my case, I had to convert the .csv to .json, and in doing that, it turned all NULL values to literally say "NULL". Surprise! I had to update those nulls before I could continue.
+
+```sql
+UPDATE layoffs_staging2
+SET total_laid_off = NULL
+WHERE total_laid_off = 'NULL';
+```
+
+```sql
+UPDATE layoffs_staging2
+SET percentage_laid_off = NULL
+WHERE percentage_laid_off = 'NULL';
+```
+
+In this example, I'm looking for null values in both percentage_laid_off and total_laid_off since those won't be useful for any analysis if there's no data in either column.
+
+```sql
+SELECT *
+FROM layoffs_staging2
+WHERE total_laid_off IS NULL
+AND percentage_laid_off IS NULL;
+```
+
+Deleting row where this was applicable:
+
+```sql
+DELETE FROM layoffs_staging2
+WHERE total_laid_off IS NULL
+AND percentage_laid_off IS NULL;
+```
+
+Just at a cursory glance, there's a null value for industry for the company 'Airbnb'. We can check to see if other Airbnb rows has the industry, and in this case they do!
+
+```sql
+SELECT *
+FROM layoffs_staging2
+WHERE company = 'Airbnb';
+```
+
+Now it's time to correct the blank row by using JOIN.
+
+```sql
+SELECT t1.industry, t2.industry
+FROM layoffs_staging2 as t1
+JOIN layoffs_staging2 as t2
+	ON t1.company = t2.company
+    AND t1.location = t2.location
+WHERE (t1.industry = NULL 
+and t2.industry != NULL;
+```
+
+This table joined the same two tables together, showing blank and populated values side by side 
