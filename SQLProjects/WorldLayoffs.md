@@ -225,7 +225,13 @@ FROM layoffs_staging2
 WHERE company = 'Airbnb';
 ```
 
-Now it's time to correct the blank row by using JOIN.
+Now it's time to correct the blank row by using JOIN. But first, I will also update the industry column to have NULL instead of 'NULL' just like above.
+
+```sql
+UPDATE layoffs_staging2
+SET industry = NULL
+where industry = 'NULL';
+```
 
 ```sql
 SELECT t1.industry, t2.industry
@@ -237,4 +243,54 @@ WHERE (t1.industry = NULL
 and t2.industry != NULL;
 ```
 
-This table joined the same two tables together, showing blank and populated values side by side 
+This table joined the same two tables together, showing blank and populated values side by side. Now the blanks can be updated.
+
+```sql
+UPDATE layoffs_staging2 AS t1
+JOIN layoffs_staging2 AS t2
+	ON t1.company = t2.company
+SET t1.industry = t2.industry
+WHERE t1.industry IS NULL
+and t2.industry IS NOT NULL;
+```
+
+This did not work because the blank values need to be set to null, not ''.
+
+```sql
+UPDATE layoffs_staging2
+SET industry = NULL
+where industry = '';
+```
+
+After doing that, the update statement worked! The last couple of things that need to be done are dropping the row_num column since it will no longer be used.
+
+```sql
+ALTER TABLE layoffs_staging2
+DROP COLUMN row_num;
+```
+
+I also realized as I started exploring the data that the total_laid_off column and funds_raised_millions column became text somehow when they should be integer. So I fixed it before I started doing any analysis.
+
+```sql
+ALTER TABLE layoffs_staging2
+MODIFY COLUMN total_laid_off INTEGER;
+```
+
+The NULL strikes again. I have to update 'NULL' to NULL before I alter the funds_raised_millions columns.
+
+```sql
+UPDATE layoffs_staging2
+SET funds_raised_millions = NULL
+WHERE funds_raised_millions = 'NULL';
+```
+
+```sql
+ALTER TABLE layoffs_staging2
+MODIFY COLUMN funds_raised_millions INTEGER;
+```
+
+## Data Exploration
+
+
+
+
