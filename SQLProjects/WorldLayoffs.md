@@ -291,6 +291,97 @@ MODIFY COLUMN funds_raised_millions INTEGER;
 
 ## Data Exploration
 
+From here I'll look at the MAX laid off:
+
+```sql
+SELECT MAX(total_laid_off)
+FROM layoffs_staging2;
+```
+
+The max is 12,000...running another statement to see the percentage of employees that is.
+
+```sql
+SELECT MAX(total_laid_off), MAX(percentage_laid_off)
+FROM layoffs_staging2;
+```
+
+This returned a MAX of 1, which means 100% of the company was laid off. Let's look at more companies that were 100% laid off:
+
+```sql
+SELECT *
+FROM layoffs_staging2
+WHERE percentage_laid_off = 1
+ORDER BY total_laid_off DESC;
+```
+<img width="752" alt="image" src="https://github.com/AmandaRigdon/amandarigdon.github.io/assets/137234405/9d6cf508-8996-43f8-a621-3060496fd091">
 
 
+The table above just shows a short summary of the data, there's 116 rows in total with companies that completely went under during 2020-2023. We can look at funds raised for companies that totally went under to see how much money they received.
 
+```sql
+SELECT *
+FROM layoffs_staging2
+WHERE percentage_laid_off = 1
+ORDER BY funds_raised_millions DESC;
+```
+
+<img width="791" alt="image" src="https://github.com/AmandaRigdon/amandarigdon.github.io/assets/137234405/efaacc7b-3bbe-462a-93e8-dd8fbaad80ae">
+
+The numbers under funds_raised_millions would come out to 2.4 million, 1.8 million, etc...
+
+Now let's see which companies laid off the most employees.
+
+```sql
+SELECT company, SUM(total_laid_off)
+FROM layoffs_staging2
+GROUP BY company
+ORDER BY 2 DESC;
+```
+
+<img width="181" alt="image" src="https://github.com/AmandaRigdon/amandarigdon.github.io/assets/137234405/8d44fbbf-f62b-46ad-a37f-8695407b8678">
+
+Amazon had the most layoffs at 18,150, followed by other tech companies. This lines up with all the news about a bunch of layoffs happening in tech.
+
+Double checking the date range to see the exact time period this data is covering.
+
+```sql
+SELECT MIN(`date`), MAX(`date`)
+FROM layoffs_staging2;
+```
+
+The date range is from 3/11/2020 until 3/6/2023, so almost exacly 3 years from when the pandemic started. 
+
+What country was impacted the most during this time?
+
+```sql
+SELECT country, SUM(total_laid_off)
+FROM layoffs_staging2
+GROUP BY country
+ORDER BY 2 DESC;
+```
+
+<img width="214" alt="image" src="https://github.com/AmandaRigdon/amandarigdon.github.io/assets/137234405/2d46f832-1572-4a44-83e2-301a0ea5e165">
+
+The U.S. at the top of this list wasn't very surprising, but it was surprising to see the Netherlands and Brazil on this list.
+
+When did the most layoffs happen?
+
+```sql
+SELECT YEAR(`date`), SUM(total_laid_off)
+FROM layoffs_staging2
+GROUP BY YEAR(`date`)
+ORDER BY 1 DESC;
+```
+<img width="171" alt="image" src="https://github.com/AmandaRigdon/amandarigdon.github.io/assets/137234405/a644d5ca-c189-4cce-8036-799b971df402">
+
+2022 had the most layoffs, but it was probably beat by 2023, since the data for 2023 was for the first 3 months so far. I would have expected more maybe in 2020 when the pandemic hit and a lot of places closed down.
+
+Looking at the total percentage laid off in each company would be hard to observe because we don't have the company size vs. the percentage that was laid off. Let's instead look at a rolling progression of layoffs.
+
+```sql
+SELECT SUBSTRING(`date`,1,7) AS `MONTH`, SUM(total_laid_off)
+FROM layoffs_staging2
+WHERE SUBSTRING(`date`,1,7) IS NOT NULL
+GROUP BY `MONTH`
+ORDER BY 1 ASC;
+```
