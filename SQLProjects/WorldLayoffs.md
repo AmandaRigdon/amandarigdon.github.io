@@ -385,3 +385,42 @@ WHERE SUBSTRING(`date`,1,7) IS NOT NULL
 GROUP BY `MONTH`
 ORDER BY 1 ASC;
 ```
+<img width="150" alt="image" src="https://github.com/AmandaRigdon/amandarigdon.github.io/assets/137234405/f31d4c1f-73e6-4bd2-a780-7208f580dce0">
+
+This is a good start! It clearly shows the layoffs of each month. Now we can put this into a CTE to show a rolling total:
+
+```sql
+WITH Rolling_Total AS 
+(
+SELECT SUBSTRING(`date`,1,7) AS `MONTH`, SUM(total_laid_off) AS total_off 
+FROM layoffs_staging2
+WHERE SUBSTRING(`date`,1,7) IS NOT NULL
+GROUP BY `MONTH`
+ORDER BY 1 ASC
+)
+SELECT `MONTH`, total_off,
+SUM(total_off) OVER(ORDER BY `MONTH`) AS rolling_total
+FROM Rolling_Total;
+```
+<img width="164" alt="image" src="https://github.com/AmandaRigdon/amandarigdon.github.io/assets/137234405/0980c5bc-4ba6-4ba5-b2c2-2e25b79f3c36">
+
+From the table above, we can see that the rolling total column is adding the previous month's layoff total as it progresses through the months.
+
+Let's finish with making a rank of the top companies by year that laid off the most employees. 
+
+```sql
+WITH Company_Year (company, years, total_laid_off) AS
+(
+SELECT company, YEAR(`date`), SUM(total_laid_off)
+FROM layoffs_staging2
+GROUP BY company, YEAR(`date`)
+), Company_Year_Rank AS 
+(SELECT *, DENSE_RANK() OVER(PARTITION BY years ORDER BY total_laid_off DESC) as Ranking
+FROM Company_Year
+WHERE years IS NOT NULL
+)
+SELECT *
+FROM Company_Year_Rank
+WHERE Ranking <= 5;
+```
+<img width="229" alt="image" src="https://github.com/AmandaRigdon/amandarigdon.github.io/assets/137234405/3f46b799-03a1-4a66-b95f-245d043955dd">
