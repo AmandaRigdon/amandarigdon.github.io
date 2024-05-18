@@ -426,3 +426,5 @@ WHERE Ranking <= 5;
 <img width="229" alt="image" src="https://github.com/AmandaRigdon/amandarigdon.github.io/assets/137234405/3f46b799-03a1-4a66-b95f-245d043955dd">
 
 Now there is a much clearer picture of which company laid off the most people each year.
+
+
