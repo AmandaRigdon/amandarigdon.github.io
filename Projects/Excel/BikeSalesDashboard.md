@@ -4,4 +4,6 @@ It breaks down average income per purchase, age vs. bike sale, and customer comm
 
 There are also some filters to see how marital status, region, and education stack up against the baseline.
 
+![](Images/BikesalesScreenshot.png)
+
 <iframe src="https://1drv.ms/x/c/2ed034ad9eb11001/IQOY39WwHijIRKOehINHL80yAZshxhNHUvdIPEWzbeiP64Q" height="800" width="100%"></iframe>
