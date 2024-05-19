@@ -15,7 +15,7 @@ Please feel free to have a look at the projects I've completed below:
 
 ## Projects
 * SQL Projects
-     * [World Layoffs EDA](SQLProjects/WorldLayoffs.md)
+     * [World Layoffs EDA](README.md)
 * Excel Projects
     * [Bike Sales Dashboard](Projects/Excel/BikeSalesDashboard.md)
 * [Google Data Analytics Capstone Project](https://github.com/AmandaRigdon/BellaBeat-Case-Study)
