@@ -6,8 +6,8 @@ With my current job as a wine information analyst, I already have some experienc
 
 Technical Skills:
 
-* *R*
 * *SQL*
+* *R*
 * *Tableau*
 * *Excel*
 
